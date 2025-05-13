@@ -5,133 +5,360 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selector de Plantillas</title>
-    <!-- CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap 3.3.7 CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Variables de colores */
         :root {
-            --primary-color: #4361ee;
-            --hover-color: #3a56d4;
+            --primary-blue: #4361ee;
+            --primary-purple: #7209b7;
+            --secondary-blue: #3a0ca3;
+            --light-purple: #c77dff;
+            --accent-color: #f72585;
+            --light-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #333333;
+            --text-light: #6c757d;
         }
 
+        /* Estilos generales */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7ff 0%, #f0e6ff 100%);
+            color: var(--text-dark);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234361ee' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+        }
+
+        .container-fluid {
+            padding: 60px 15px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 600;
+        }
+
+        .page-header {
+            border: none;
+            margin: 0 0 40px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-purple));
+            border-radius: 2px;
+        }
+
+        .page-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .page-subtitle {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 0;
+        }
+
+        /* Estilos de las tarjetas */
         .template-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border-radius: 15px;
             overflow: hidden;
+            background: var(--card-bg);
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            position: relative;
+            height: 280px;
         }
 
         .template-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(67, 97, 238, 0.15);
+        }
+
+        .template-card:hover .template-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .template-card:hover .card-title {
+            color: var(--primary-purple);
+        }
+
+        .template-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-purple));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .template-card:hover:before {
+            opacity: 1;
+        }
+
+        .card-body {
+            padding: 30px 20px;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .template-icon {
-            width: 60px;
-            height: 60px;
-            font-size: 24px;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            font-size: 28px;
             font-weight: bold;
-            background-color: var(--primary-color);
+            color: white;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            box-shadow: 0 5px 15px rgba(114, 9, 183, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
-        @media (max-width: 768px) {
+        .template-icon::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--primary-blue));
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .template-card:hover .template-icon::before {
+            opacity: 1;
+        }
+
+        .card-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+            transition: color 0.3s ease;
+        }
+
+        .card-text {
+            color: var(--text-light);
+            margin-bottom: 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Decoraciones */
+        .decoration {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .decoration-1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(114, 9, 183, 0.1) 0%, rgba(114, 9, 183, 0) 70%);
+            top: -150px;
+            right: -150px;
+        }
+
+        .decoration-2 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(67, 97, 238, 0.1) 0%, rgba(67, 97, 238, 0) 70%);
+            bottom: -100px;
+            left: -100px;
+        }
+
+        /* Responsive */
+        @media (max-width: 767px) {
+            .page-title {
+                font-size: 28px;
+            }
+
+            .page-subtitle {
+                font-size: 16px;
+            }
+
             .template-icon {
-                width: 50px;
-                height: 50px;
+                width: 70px;
+                height: 70px;
+                font-size: 24px;
+            }
+
+            .card-title {
                 font-size: 20px;
+            }
+
+            .template-card {
+                height: 250px;
             }
         }
     </style>
 </head>
 
-<body class="bg-light">
-    <div class="container-fluid min-vh-100 d-flex flex-column justify-content-center align-items-center">
-        <div class="text-center mb-5">
-            <h1 class="display-4 fw-bold">Selecciona una Plantilla</h1>
-            <p class="lead text-muted">Elige una de nuestras plantillas para comenzar</p>
+<body>
+    <div class="decoration decoration-1"></div>
+    <div class="decoration decoration-2"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <div class="page-header">
+                    <h1 class="page-title">Selecciona una Plantilla</h1>
+                    <p class="page-subtitle">Elige una de nuestras plantillas para comenzar tu proyecto</p>
+                </div>
+            </div>
         </div>
 
-        <div class="row g-4 justify-content-center w-100" style="max-width: 1200px;">
+        <div class="row">
             <!-- Plantilla 1 -->
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-xs-12 col-sm-6 col-md-4">
                 <a href="plantilla1.html" class="text-decoration-none">
-                    <div class="card h-100 shadow-sm border-0 template-card">
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-                            <div
-                                class="template-icon mb-3 bg-primary text-white rounded-circle d-flex justify-content-center align-items-center">
-                                1
+                    <div class="template-card">
+                        <div class="card-body">
+                            <div class="template-icon">
+                                <i class="fa fa-file-text-o"></i>
                             </div>
                             <h3 class="card-title">Plantilla 1</h3>
-                            <p class="card-text text-muted">Descripción breve de la plantilla 1</p>
+                            <p class="card-text">Diseño elegante y minimalista ideal para portfolios profesionales</p>
                         </div>
                     </div>
                 </a>
             </div>
 
             <!-- Plantilla 2 -->
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-xs-12 col-sm-6 col-md-4">
                 <a href="plantilla2.html" class="text-decoration-none">
-                    <div class="card h-100 shadow-sm border-0 template-card">
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-                            <div
-                                class="template-icon mb-3 bg-primary text-white rounded-circle d-flex justify-content-center align-items-center">
-                                2
+                    <div class="template-card">
+                        <div class="card-body">
+                            <div class="template-icon">
+                                <i class="fa fa-shopping-cart"></i>
                             </div>
                             <h3 class="card-title">Plantilla 2</h3>
-                            <p class="card-text text-muted">Descripción breve de la plantilla 2</p>
+                            <p class="card-text">Perfecta para tiendas online con diseño moderno y funcional</p>
                         </div>
                     </div>
                 </a>
             </div>
 
             <!-- Plantilla 3 -->
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-xs-12 col-sm-6 col-md-4">
                 <a href="plantilla3.html" class="text-decoration-none">
-                    <div class="card h-100 shadow-sm border-0 template-card">
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-                            <div
-                                class="template-icon mb-3 bg-primary text-white rounded-circle d-flex justify-content-center align-items-center">
-                                3
+                    <div class="template-card">
+                        <div class="card-body">
+                            <div class="template-icon">
+                                <i class="fa fa-newspaper-o"></i>
                             </div>
                             <h3 class="card-title">Plantilla 3</h3>
-                            <p class="card-text text-muted">Descripción breve de la plantilla 3</p>
+                            <p class="card-text">Ideal para blogs y sitios de noticias con múltiples secciones</p>
                         </div>
                     </div>
                 </a>
             </div>
 
             <!-- Plantilla 4 -->
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-xs-12 col-sm-6 col-md-4">
                 <a href="plantilla4.html" class="text-decoration-none">
-                    <div class="card h-100 shadow-sm border-0 template-card">
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-                            <div
-                                class="template-icon mb-3 bg-primary text-white rounded-circle d-flex justify-content-center align-items-center">
-                                4
+                    <div class="template-card">
+                        <div class="card-body">
+                            <div class="template-icon">
+                                <i class="fa fa-briefcase"></i>
                             </div>
                             <h3 class="card-title">Plantilla 4</h3>
-                            <p class="card-text text-muted">Descripción breve de la plantilla 4</p>
+                            <p class="card-text">Diseño corporativo para empresas que buscan proyectar profesionalismo
+                            </p>
                         </div>
                     </div>
                 </a>
             </div>
 
             <!-- Plantilla 5 -->
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-xs-12 col-sm-6 col-md-4">
                 <a href="plantilla5.html" class="text-decoration-none">
-                    <div class="card h-100 shadow-sm border-0 template-card">
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-                            <div
-                                class="template-icon mb-3 bg-primary text-white rounded-circle d-flex justify-content-center align-items-center">
-                                5
+                    <div class="template-card">
+                        <div class="card-body">
+                            <div class="template-icon">
+                                <i class="fa fa-camera"></i>
                             </div>
                             <h3 class="card-title">Plantilla 5</h3>
-                            <p class="card-text text-muted">Descripción breve de la plantilla 5</p>
+                            <p class="card-text">Perfecta para fotógrafos y creativos con enfoque en contenido visual
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Plantilla 6 (Añadida para completar la fila) -->
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <a href="plantilla6.html" class="text-decoration-none">
+                    <div class="template-card">
+                        <div class="card-body">
+                            <div class="template-icon">
+                                <i class="fa fa-cutlery"></i>
+                            </div>
+                            <h3 class="card-title">Plantilla 6</h3>
+                            <p class="card-text">Diseño especial para restaurantes y servicios de alimentación</p>
                         </div>
                     </div>
                 </a>
             </div>
         </div>
     </div>
+
+    <!-- jQuery (necesario para Bootstrap 3.3.7) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 
 </html>
